@@ -8,7 +8,7 @@ import android.widget.FrameLayout;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import by.ansgar.drawwithme.R;
-import by.ansgar.drawwithme.ui.fragment.FirstLoginFragment;
+import by.ansgar.drawwithme.ui.fragment.LoginFragment;
 import by.ansgar.drawwithme.util.FragmentUtil;
 
 public class MainActivity extends AppCompatActivity {
@@ -28,6 +28,6 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(LAYOUT);
         ButterKnife.bind(this);
-        FragmentUtil.replaceFragment(this, R.id.main_fragment_container, FirstLoginFragment.newInstance(), false);
+        FragmentUtil.replaceFragment(this, R.id.main_fragment_container, LoginFragment.newInstance(), false);
     }
 }

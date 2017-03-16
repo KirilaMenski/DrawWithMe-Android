@@ -6,11 +6,13 @@
                 android:orientation="vertical">
 
     <LinearLayout
+        android:id="@+id/gender_ll"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="horizontal">
 
         <RelativeLayout
+            android:id="@+id/male_rl"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1">
@@ -32,6 +34,7 @@
         </RelativeLayout>
 
         <RelativeLayout
+            android:id="@+id/female_rl"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1">
@@ -52,6 +55,50 @@
 
         </RelativeLayout>
 
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/nick_name_ll"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="horizontal">
+
+        <android.support.v4.widget.Space
+            android:id="@+id/male_space"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"/>
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <EditText
+                android:id="@+id/email"
+                android:layout_width="@dimen/xxxxb_size"
+                android:layout_height="@dimen/xxh_size"
+                android:background="@drawable/background_edit"
+                android:gravity="center"
+                android:hint="@string/input_your_name"
+                android:imeOptions="actionSearch"
+                android:inputType="textEmailAddress"
+                android:maxLines="1"
+                android:textColor="@android:color/black"
+                android:textColorHint="@color/edit_color"
+                android:textSize="@dimen/text_size_medium"
+                android:theme="@style/Theme.App.Search"/>
+
+        </LinearLayout>
+
+        <android.support.v4.widget.Space
+            android:id="@+id/female_space"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"/>
 
     </LinearLayout>
 
@@ -86,6 +133,7 @@
         android:layout_centerHorizontal="true"
         android:layout_margin="@dimen/h_dimen"
         android:background="@drawable/text_btn_background"
+        android:clickable="true"
         android:gravity="center"
         android:text="@string/next"
         android:textAllCaps="true"
