@@ -1,0 +1,91 @@
+buildscript {
+    dependencies {
+        classpath 'io.fabric.tools:gradle:1.+'
+    }
+
+    repositories {
+        jcenter()
+        maven { url 'https://maven.fabric.io/public' }
+    }
+}
+apply plugin: 'com.android.application'
+apply plugin: 'com.neenbedankt.android-apt'
+
+repositories {
+    mavenCentral()
+    maven { url 'https://maven.fabric.io/public' }
+}
+
+def gitSha = 'git rev-parse --short HEAD '.execute([], project.rootDir).text.trim()
+def buildTime = new Date().format("yyyy-MM-dd'T'HH:mm'Z'", TimeZone.getTimeZone("UTC"))
+
+android {
+    compileSdkVersion 25
+    buildToolsVersion "25.0.1"
+
+    def db_version = 1;
+
+    defaultConfig {
+        applicationId "com.ansgar.mylib"
+        minSdkVersion 16
+        targetSdkVersion 25
+        versionCode 1
+        versionName "0.8"
+        multiDexEnabled true
+
+        buildConfigField "String", "GIT_SHA", "\"${gitSha}\""
+        buildConfigField "String", "BUILD_TIME", "\"${buildTime}\""
+        buildConfigField "int", "DB_VERSION_NUMBER", "${db_version}"
+    }
+
+    packagingOptions {
+        exclude 'META-INF/LICENSE.txt'
+        exclude 'META-INF/NOTICE.txt'
+    }
+
+    signingConfigs {
+        release {
+            storePassword "051096"
+            keyAlias 'com.ansgar.drawwithme'
+            keyPassword "051096"
+            storeFile file('../android.jks')
+        }
+    }
+
+    buildTypes {
+        debug {
+            versionNameSuffix "-debug"
+            debuggable true
+            zipAlignEnabled true
+            signingConfig signingConfigs.release
+            minifyEnabled false
+        }
+        release {
+            debuggable true
+            minifyEnabled false
+            signingConfig signingConfigs.release
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+
+    dexOptions {
+        jumboMode true
+    }
+
+    useLibrary 'org.apache.http.legacy'
+}
+
+dependencies {
+    compile fileTree(dir: 'libs', include: ['*.jar'])
+    androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
+        exclude group: 'com.android.support', module: 'support-annotations'
+    })
+    compile 'com.android.support:appcompat-v7:25.1.0'
+    testCompile 'junit:junit:4.12'
+    compile 'com.android.support:multidex:1.0.0'
+    compile 'com.android.support:support-v4:25.1.0'
+    compile 'com.android.support:recyclerview-v7:25.1.0'
+    compile 'com.android.support:design:25.1.0'
+    compile 'com.jakewharton:butterknife:8.4.0'
+    apt 'com.jakewharton:butterknife-compiler:8.4.0'
+}
