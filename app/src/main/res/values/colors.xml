@@ -6,4 +6,9 @@
     <color name="edit_color">#bebebe</color>
     <color name="toolbar">#1d3037</color>
     <color name="count_color">#009ada</color>
+    <color name="choose_background">#50000000</color>
+    <color name="text_background_pressed">#fef083</color>
+    <color name="text_background">#fef9b5</color>
+    <color name="main_background_start">#fbf0b8</color>
+    <color name="main_background_end">#fcfddd</color>
 </resources>
