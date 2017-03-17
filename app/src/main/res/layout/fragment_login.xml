@@ -78,7 +78,7 @@
             android:orientation="vertical">
 
             <EditText
-                android:id="@+id/email"
+                android:id="@+id/nick_name"
                 android:layout_width="@dimen/xxxxb_size"
                 android:layout_height="@dimen/xxh_size"
                 android:background="@drawable/background_edit"

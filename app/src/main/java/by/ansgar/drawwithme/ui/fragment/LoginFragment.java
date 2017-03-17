@@ -7,20 +7,23 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.Space;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import by.ansgar.drawwithme.R;
+import by.ansgar.drawwithme.ui.activity.ChatRoomActivity;
+import by.ansgar.drawwithme.ui.activity.MainActivity;
 
 import static by.ansgar.drawwithme.util.DisplayMetricUtil.getScreenHeight;
 
@@ -36,7 +39,15 @@ public class LoginFragment extends Fragment {
 
     private int mDrawableRes;
     private int mDisplayHeight;
-    private boolean mIsMale = false;
+    private boolean mIsMale;
+
+    MainActivity mActivity;
+
+    @BindView(R.id.next)
+    TextView mNext;
+
+    @BindView(R.id.nick_name)
+    EditText mNickName;
 
     @BindView(R.id.radio_group)
     RadioGroup mSexRadioGroup;
@@ -80,9 +91,9 @@ public class LoginFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(LAYOUT, container, false);
         ButterKnife.bind(this, view);
+        mActivity = (MainActivity) getActivity();
         RelativeLayout.LayoutParams params = (RelativeLayout.LayoutParams) mNickNameLl.getLayoutParams();
         mDisplayHeight = getScreenHeight(getActivity());
-        Log.i("!!!!!!!!", "height: " + mDisplayHeight);
         params.setMargins(0, -1 * mDisplayHeight, 0, 0);
         mNickNameLl.setLayoutParams(params);
         return view;
@@ -126,18 +137,26 @@ public class LoginFragment extends Fragment {
 
     @OnClick(R.id.next)
     public void next() {
-        if (mDrawableRes == 0) {
-            Toast.makeText(getContext(), getString(R.string.choose_gender), Toast.LENGTH_SHORT).show();
-            return;
+        if (!mActivity.isNextClicked()) {
+            if (mDrawableRes == 0) {
+                Toast.makeText(getContext(), getString(R.string.choose_gender), Toast.LENGTH_SHORT).show();
+                return;
+            }
+            mActivity.setNextClicked(true);
+            startAnimation();
+        } else {
+            if (mNickName.getText().toString() == null || mNickName.getText().toString().length() < 4) {
+                Toast.makeText(getContext(), getString(R.string.input_your_name), Toast.LENGTH_SHORT).show();
+                return;
+            }
+            startActivity(ChatRoomActivity.newIntent(getContext()));
+            getActivity().finish();
         }
-        startAnimation();
     }
 
-    private void startAnimation() {
-
+    public void startAnimation() {
         int nickNameStart = -1 * mDisplayHeight;
-        int nickNameEnd = nickNameStart  + mNickNameLl.getHeight() / 4;
-        Log.i("!!!!!!!!", "height: " + nickNameEnd);
+        int nickNameEnd = nickNameStart + mNickNameLl.getHeight() / 4;
 
         int start = mMaleRl.getTop();
         int end = mMaleRl.getHeight();
@@ -147,19 +166,29 @@ public class LoginFragment extends Fragment {
         mMaleSpace.setVisibility(mIsMale ? View.VISIBLE : View.GONE);
         mFemaleSpace.setVisibility(mIsMale ? View.GONE : View.VISIBLE);
 
-        ObjectAnimator nickNameLlAnimation = ObjectAnimator.ofFloat(mNickNameLl, "y", nickNameStart, nickNameEnd)
+        ObjectAnimator nickNameLlAnimation = ObjectAnimator.ofFloat(mNickNameLl, "y",
+                mActivity.isNextClicked() ? nickNameStart : nickNameEnd,
+                mActivity.isNextClicked() ? nickNameEnd : nickNameStart)
                 .setDuration(DURATION);
 
         nickNameLlAnimation.start();
 
-        ObjectAnimator radioGroupAnimation = ObjectAnimator.ofFloat(mSexRadioGroup, "y", radioGroupStart, end)
+        ObjectAnimator radioGroupAnimation = ObjectAnimator.ofFloat(mSexRadioGroup, "y",
+                mActivity.isNextClicked() ? radioGroupStart : end,
+                mActivity.isNextClicked() ? end : radioGroupStart)
                 .setDuration(DURATION);
 
-        ObjectAnimator maleAnimation = ObjectAnimator.ofFloat(mMaleRl, "y", start, end)
+        ObjectAnimator maleAnimation = ObjectAnimator.ofFloat(mMaleRl, "y",
+                mActivity.isNextClicked() ? start : end,
+                mActivity.isNextClicked() ? end : start)
                 .setDuration(DURATION);
 
-        ObjectAnimator femaleAnimation = ObjectAnimator.ofFloat(mFemaleRl, "y", start, end)
+        ObjectAnimator femaleAnimation = ObjectAnimator.ofFloat(mFemaleRl, "y",
+                mActivity.isNextClicked() ? start : end,
+                mActivity.isNextClicked() ? end : start)
                 .setDuration(DURATION);
+
+        mNext.setText(mActivity.isNextClicked() ? getString(R.string.start) : getString(R.string.next));
 
         if (mIsMale) {
             femaleAnimation.start();
