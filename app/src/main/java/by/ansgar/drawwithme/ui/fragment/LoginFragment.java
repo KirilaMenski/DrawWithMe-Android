@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.Space;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,6 +22,8 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import by.ansgar.drawwithme.R;
 
+import static by.ansgar.drawwithme.util.DisplayMetricUtil.getScreenHeight;
+
 /**
  * Created by kirila on 16.3.17.
  */
@@ -32,6 +35,7 @@ public class LoginFragment extends Fragment {
     private static final int DURATION = 1500;
 
     private int mDrawableRes;
+    private int mDisplayHeight;
     private boolean mIsMale = false;
 
     @BindView(R.id.radio_group)
@@ -77,7 +81,9 @@ public class LoginFragment extends Fragment {
         View view = inflater.inflate(LAYOUT, container, false);
         ButterKnife.bind(this, view);
         RelativeLayout.LayoutParams params = (RelativeLayout.LayoutParams) mNickNameLl.getLayoutParams();
-        params.setMargins(0, -1*mNickNameLl.getHeight(), 0, 0);
+        mDisplayHeight = getScreenHeight(getActivity());
+        Log.i("!!!!!!!!", "height: " + mDisplayHeight);
+        params.setMargins(0, -1 * mDisplayHeight, 0, 0);
         mNickNameLl.setLayoutParams(params);
         return view;
     }
@@ -91,10 +97,12 @@ public class LoginFragment extends Fragment {
     private void loadImg() {
         Picasso.with(getContext())
                 .load(R.drawable.male)
+                .resize(400, mMaleImg.getHeight())
                 .into(mMaleImg);
 
         Picasso.with(getContext())
                 .load(R.drawable.female)
+                .resize(400, mFemaleImg.getHeight())
                 .into(mFemaleImg);
     }
 
@@ -122,16 +130,14 @@ public class LoginFragment extends Fragment {
             Toast.makeText(getContext(), getString(R.string.choose_gender), Toast.LENGTH_SHORT).show();
             return;
         }
-//        FragmentUtil.replaceAnimFragment(getActivity(), R.id.main_fragment_container,
-//                SecondLoginFragment.newInstance(mDrawableRes), true,
-//                R.anim.right_out, R.anim.left_out);
         startAnimation();
     }
 
     private void startAnimation() {
 
-        int nickNameStart = -1*mNickNameLl.getHeight();
-        int nickNaeEnd = 0;
+        int nickNameStart = -1 * mDisplayHeight;
+        int nickNameEnd = nickNameStart  + mNickNameLl.getHeight() / 4;
+        Log.i("!!!!!!!!", "height: " + nickNameEnd);
 
         int start = mMaleRl.getTop();
         int end = mMaleRl.getHeight();
@@ -141,7 +147,7 @@ public class LoginFragment extends Fragment {
         mMaleSpace.setVisibility(mIsMale ? View.VISIBLE : View.GONE);
         mFemaleSpace.setVisibility(mIsMale ? View.GONE : View.VISIBLE);
 
-        ObjectAnimator nickNameLlAnimation = ObjectAnimator.ofFloat(mNickNameLl, "y", nickNameStart, nickNaeEnd)
+        ObjectAnimator nickNameLlAnimation = ObjectAnimator.ofFloat(mNickNameLl, "y", nickNameStart, nickNameEnd)
                 .setDuration(DURATION);
 
         nickNameLlAnimation.start();
@@ -155,7 +161,7 @@ public class LoginFragment extends Fragment {
         ObjectAnimator femaleAnimation = ObjectAnimator.ofFloat(mFemaleRl, "y", start, end)
                 .setDuration(DURATION);
 
-        if(mIsMale) {
+        if (mIsMale) {
             femaleAnimation.start();
         } else {
             maleAnimation.start();
