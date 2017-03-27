@@ -4,6 +4,7 @@ import com.squareup.picasso.Picasso;
 
 import android.animation.ObjectAnimator;
 import android.os.Bundle;
+import android.provider.Settings;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.Space;
@@ -22,7 +23,8 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import by.ansgar.drawwithme.R;
-import by.ansgar.drawwithme.ui.activity.ChatRoomActivity;
+import by.ansgar.drawwithme.entity.User;
+import by.ansgar.drawwithme.ui.activity.ChatActivity;
 import by.ansgar.drawwithme.ui.activity.MainActivity;
 
 import static by.ansgar.drawwithme.util.DisplayMetricUtil.getScreenHeight;
@@ -149,7 +151,10 @@ public class LoginFragment extends Fragment {
                 Toast.makeText(getContext(), getString(R.string.input_your_name), Toast.LENGTH_SHORT).show();
                 return;
             }
-            startActivity(ChatRoomActivity.newIntent(getContext()));
+            String deviceId = Settings.Secure.getString(getContext().getContentResolver(),
+                    Settings.Secure.ANDROID_ID);
+            User user = new User(deviceId, mNickName.getText().toString(), mIsMale ? 1 : 0);
+            startActivity(ChatActivity.newIntent(getContext(), user));
             getActivity().finish();
         }
     }
