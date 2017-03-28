@@ -75,6 +75,6 @@ public class RoomsFragment extends Fragment implements RoomClickListener {
     @Override
     public void roomSelected(Room room) {
         Log.i("RoomsAdapter", "Room " + room.getName() + " selected!");
-        FragmentUtil.replaceFragment(getActivity(), R.id.chat_room_fragment_container, ChatFragment.newInstance(), true);
+        FragmentUtil.replaceFragment(getActivity(), R.id.chat_room_fragment_container, ChatFragment.newInstance(mUser), true);
     }
 }

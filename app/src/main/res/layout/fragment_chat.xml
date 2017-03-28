@@ -15,6 +15,7 @@
         android:padding="@dimen/h_dimen">
 
         <android.support.v7.widget.RecyclerView
+            android:id="@+id/message_recycler"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="1"></android.support.v7.widget.RecyclerView>
@@ -23,24 +24,49 @@
             android:layout_width="match_parent"
             android:layout_height="1dp"
             android:layout_marginBottom="@dimen/l_dimen"
-            android:layout_marginTop="@dimen/m_dimen"
             android:background="@android:color/black"/>
 
-        <EditText
-            android:id="@+id/message"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_gravity="bottom"
             android:background="@drawable/background_edit"
-            android:imeOptions="actionSearch"
-            android:inputType="textMultiLine"
-            android:lines="3"
-            android:paddingLeft="@dimen/l_dimen"
-            android:paddingRight="@dimen/l_dimen"
-            android:textColor="@android:color/black"
-            android:textColorHint="@color/edit_color"
-            android:textSize="@dimen/text_size_medium"
-            android:theme="@style/Theme.App.Search"/>
+            android:orientation="horizontal"
+            android:padding="@dimen/l_dimen">
+
+            <EditText
+                android:id="@+id/message"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom"
+                android:layout_weight="1"
+                android:gravity="top|left"
+                android:imeOptions="actionSearch"
+                android:inputType="textMultiLine"
+                android:lines="4"
+                android:minLines="2"
+                android:paddingLeft="@dimen/m_dimen"
+                android:paddingRight="@dimen/m_dimen"
+                android:textColor="@android:color/black"
+                android:textColorHint="@color/edit_color"
+                android:textSize="@dimen/text_size_small"
+                android:theme="@style/Theme.App.Search"/>
+
+            <ImageView
+                android:id="@+id/smiles"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/l_dimen"
+                android:src="@drawable/ic_smiles"/>
+
+            <ImageView
+                android:id="@+id/send"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/l_dimen"
+                android:src="@drawable/ic_action_send"/>
+
+        </LinearLayout>
+
 
     </LinearLayout>
 
@@ -51,6 +77,15 @@
         android:layout_margin="@dimen/h_dimen"
         android:layout_weight="1"
         android:background="@drawable/blocks_background"
-        android:orientation="vertical"></LinearLayout>
+        android:orientation="vertical"
+        android:padding="@dimen/h_dimen">
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/members_recycler"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+        </android.support.v7.widget.RecyclerView>
+
+    </LinearLayout>
 
 </LinearLayout>
