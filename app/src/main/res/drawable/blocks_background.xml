@@ -5,7 +5,7 @@
             <corners android:radius="20dp" />
             <solid android:color="@color/choose_background" />
             <stroke
-                android:width="5dip"
+                android:width="2dip"
                 android:color="@android:color/black" />
             <padding
                 android:bottom="4dp"

@@ -4,7 +4,7 @@
               android:layout_height="match_parent"
               android:orientation="horizontal">
 
-    <LinearLayout
+    <RelativeLayout
         android:id="@+id/chat_ll"
         android:layout_width="0dp"
         android:layout_height="match_parent"
@@ -17,18 +17,39 @@
         <android.support.v7.widget.RecyclerView
             android:id="@+id/message_recycler"
             android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1"></android.support.v7.widget.RecyclerView>
+            android:layout_height="match_parent"
+            android:layout_above="@+id/view"></android.support.v7.widget.RecyclerView>
 
         <View
+            android:id="@+id/view"
             android:layout_width="match_parent"
             android:layout_height="1dp"
+            android:layout_above="@+id/message_ll"
             android:layout_marginBottom="@dimen/l_dimen"
             android:background="@android:color/black"/>
 
         <LinearLayout
+            android:id="@+id/smiles_ll"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_above="@+id/view"
+            android:background="@android:color/white"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:translationZ="@dimen/m_dimen"
+            android:visibility="gone">
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/smiles_recycler"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"></android.support.v7.widget.RecyclerView>
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/message_ll"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
             android:background="@drawable/background_edit"
             android:orientation="horizontal"
             android:padding="@dimen/l_dimen">
@@ -68,7 +89,7 @@
         </LinearLayout>
 
 
-    </LinearLayout>
+    </RelativeLayout>
 
     <LinearLayout
         android:id="@+id/members_ll"
