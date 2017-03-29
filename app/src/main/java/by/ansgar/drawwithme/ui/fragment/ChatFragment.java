@@ -92,6 +92,7 @@ public class ChatFragment extends Fragment implements SmilesListener {
         updateMessagesRecycler(mMessages);
         mMessage.setText("");
         KeyBoardUtils.hideKeyBoard(getActivity());
+        mSmilesLl.setVisibility(View.GONE);
     }
 
     @OnClick(R.id.smiles)
@@ -122,6 +123,7 @@ public class ChatFragment extends Fragment implements SmilesListener {
 
     @Override
     public void smileSelected(String path) {
+        String pattern = "[" + path + "]";
         Drawable drawable = null;
         try {
             drawable = Drawable.createFromStream(getContext().getAssets().open(path), null);
@@ -131,11 +133,11 @@ public class ChatFragment extends Fragment implements SmilesListener {
         drawable.setBounds(0, 0, drawable.getIntrinsicWidth(), drawable.getIntrinsicHeight());
 
         int selectionCursor = mMessage.getSelectionStart();
-        mMessage.getText().insert(selectionCursor, ".");
+        mMessage.getText().insert(selectionCursor, pattern);
         selectionCursor = mMessage.getSelectionStart();
 
         SpannableStringBuilder builder = new SpannableStringBuilder(mMessage.getText());
-        builder.setSpan(new ImageSpan(drawable), selectionCursor - ".".length(), selectionCursor, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+        builder.setSpan(new ImageSpan(drawable), selectionCursor - pattern.length(), selectionCursor, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
         mMessage.setText(builder);
         mMessage.setSelection(selectionCursor);
         mSmilesLl.setVisibility(View.GONE);

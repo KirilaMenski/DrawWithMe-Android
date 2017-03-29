@@ -13,6 +13,8 @@ import android.content.Context;
 
 public class SmilesUtil {
 
+    public static final String SMILE_PATTERN = "(\\[)(.*?)(\\])";
+
     private static final String SMILES_FOLDER = "smiles";
 
     public static List<String> getSmiles(Context context) {
