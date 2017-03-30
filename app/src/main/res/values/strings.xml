@@ -5,4 +5,16 @@
     <string name="input_your_name">Input your name</string>
     <string name="start">Start</string>
     <string name="members_count">Members count: %d</string>
+    <string-array name="colors">
+        <item>#FF0000</item>
+        <item>#000000</item>
+        <item>#FFFFFF</item>
+        <item>#0800FF</item>
+        <item>#15FF00</item>
+        <item>#AE00FF</item>
+        <item>#FF9500</item>
+        <item>#00FFE1</item>
+        <item>#FFF700</item>
+        <item>#047800</item>
+    </string-array>
 </resources>

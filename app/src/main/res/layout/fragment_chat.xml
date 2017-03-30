@@ -78,14 +78,16 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/l_dimen"
-                android:src="@drawable/ic_smiles"/>
+                android:src="@drawable/ic_smiles_state"
+                android:clickable="true"/>
 
             <ImageView
                 android:id="@+id/send"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/l_dimen"
-                android:src="@drawable/ic_action_send"/>
+                android:src="@drawable/ic_action_send_state"
+                android:clickable="true"/>
 
         </LinearLayout>
 

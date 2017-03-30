@@ -10,11 +10,13 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import by.ansgar.drawwithme.R;
 import by.ansgar.drawwithme.entity.User;
+import by.ansgar.drawwithme.ui.listeners.UserListener;
 
 /**
  * Created by kirila on 28.3.17.
@@ -26,10 +28,12 @@ public class UsersAdapter extends RecyclerView.Adapter<UsersAdapter.UsersHolder>
 
     private List<User> mUsers;
     private WeakReference<FragmentActivity> mActivity;
+    private WeakReference<UserListener> mListener;
 
-    public UsersAdapter(List<User> members, FragmentActivity activity) {
+    public UsersAdapter(List<User> members, FragmentActivity activity, UserListener listener) {
         mUsers = members;
         mActivity = new WeakReference<>(activity);
+        mListener = new WeakReference<>(listener);
     }
 
     @Override
@@ -40,9 +44,15 @@ public class UsersAdapter extends RecyclerView.Adapter<UsersAdapter.UsersHolder>
     }
 
     @Override
-    public void onBindViewHolder(UsersHolder holder, int position) {
-        User user = mUsers.get(position);
+    public void onBindViewHolder(final UsersHolder holder, int position) {
+        final User user = mUsers.get(position);
         holder.bindViews(user);
+        holder.mUserLl.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                mListener.get().userClicked(user);
+            }
+        });
     }
 
     @Override
@@ -56,6 +66,8 @@ public class UsersAdapter extends RecyclerView.Adapter<UsersAdapter.UsersHolder>
         ImageView mGenderIcon;
         @BindView(R.id.user_name)
         TextView mUserName;
+        @BindView(R.id.user_ll)
+        LinearLayout mUserLl;
 
         public UsersHolder(View itemView) {
             super(itemView);

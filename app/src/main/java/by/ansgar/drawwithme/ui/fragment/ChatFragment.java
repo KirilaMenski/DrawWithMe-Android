@@ -29,6 +29,7 @@ import by.ansgar.drawwithme.ui.adapter.MessagesAdapter;
 import by.ansgar.drawwithme.ui.adapter.SmilesAdapter;
 import by.ansgar.drawwithme.ui.adapter.UsersAdapter;
 import by.ansgar.drawwithme.ui.listeners.SmilesListener;
+import by.ansgar.drawwithme.ui.listeners.UserListener;
 import by.ansgar.drawwithme.util.DateUtils;
 import by.ansgar.drawwithme.util.KeyBoardUtils;
 import by.ansgar.drawwithme.util.SmilesUtil;
@@ -37,7 +38,7 @@ import by.ansgar.drawwithme.util.SmilesUtil;
  * Created by kirila on 27.3.17.
  */
 
-public class ChatFragment extends Fragment implements SmilesListener {
+public class ChatFragment extends Fragment implements SmilesListener, UserListener {
 
     private static final int LAYOUT = R.layout.fragment_chat;
     private static final String EXTRA_USER = "by.ansgar.drawwithme.ui.fragment.user";
@@ -110,7 +111,7 @@ public class ChatFragment extends Fragment implements SmilesListener {
     }
 
     public void updateUsersRecycler(List<User> users) {
-        mUsersAdapter = new UsersAdapter(users, getActivity());
+        mUsersAdapter = new UsersAdapter(users, getActivity(), this);
         mUsersRecycler.setLayoutManager(new LinearLayoutManager(getContext()));
         mUsersRecycler.setAdapter(mUsersAdapter);
     }
@@ -141,5 +142,10 @@ public class ChatFragment extends Fragment implements SmilesListener {
         mMessage.setText(builder);
         mMessage.setSelection(selectionCursor);
         mSmilesLl.setVisibility(View.GONE);
+    }
+
+    @Override
+    public void userClicked(User user) {
+
     }
 }
