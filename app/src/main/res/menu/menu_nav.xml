@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+      xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item
+        android:id="@+id/tool_draw"
+        android:enabled="true"
+        android:icon="@drawable/ic_tools_draw"
+        android:title=""
+        app:showAsAction="ifRoom"/>
+
+    <item
+        android:id="@+id/tools_hand"
+        android:enabled="true"
+        android:icon="@drawable/ic_tools_hand"
+        android:title=""
+        app:showAsAction="ifRoom"/>
+
+    <item
+        android:id="@+id/tools_cleaner"
+        android:enabled="true"
+        android:icon="@drawable/ic_tools_cleaner"
+        android:title=""
+        app:showAsAction="ifRoom"/>
+
+    <item
+        android:id="@+id/tools_filling"
+        android:enabled="true"
+        android:icon="@drawable/ic_tools_filling"
+        android:title=""
+        app:showAsAction="ifRoom"/>
+
+</menu>

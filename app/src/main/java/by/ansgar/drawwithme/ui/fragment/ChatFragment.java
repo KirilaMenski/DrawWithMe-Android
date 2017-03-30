@@ -31,6 +31,7 @@ import by.ansgar.drawwithme.ui.adapter.UsersAdapter;
 import by.ansgar.drawwithme.ui.listeners.SmilesListener;
 import by.ansgar.drawwithme.ui.listeners.UserListener;
 import by.ansgar.drawwithme.util.DateUtils;
+import by.ansgar.drawwithme.util.FragmentUtil;
 import by.ansgar.drawwithme.util.KeyBoardUtils;
 import by.ansgar.drawwithme.util.SmilesUtil;
 
@@ -146,6 +147,7 @@ public class ChatFragment extends Fragment implements SmilesListener, UserListen
 
     @Override
     public void userClicked(User user) {
-
+        //TODO
+        FragmentUtil.replaceFragment(getActivity(), R.id.chat_room_fragment_container, PrivateChatFragment.newInstance(), true);
     }
 }
