@@ -5,10 +5,12 @@ import java.util.List;
 
 import android.graphics.Color;
 import android.support.v4.app.FragmentActivity;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -27,6 +29,8 @@ public class ColorAdapter extends RecyclerView.Adapter<ColorAdapter.ColorHolder>
     private WeakReference<FragmentActivity> mActivity;
     private WeakReference<ColorListener> mListener;
 
+    private LinearLayout mLastColorItem;
+
     public ColorAdapter(List<String> colors, FragmentActivity activity, ColorListener listener) {
         mColors = colors;
         mActivity = new WeakReference<>(activity);
@@ -41,13 +45,18 @@ public class ColorAdapter extends RecyclerView.Adapter<ColorAdapter.ColorHolder>
     }
 
     @Override
-    public void onBindViewHolder(ColorHolder holder, int position) {
+    public void onBindViewHolder(final ColorHolder holder, int position) {
         final String color = mColors.get(position);
+        if (position == 0) mLastColorItem = holder.mColorItem;
+        mLastColorItem.setBackgroundColor(ContextCompat.getColor(mActivity.get(), R.color.choose_background));
         holder.bindView(color);
-        holder.mColor.setOnClickListener(new View.OnClickListener() {
+        holder.mColorItem.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 mListener.get().colorSelected(color);
+                holder.mColorItem.setBackgroundColor(ContextCompat.getColor(mActivity.get(), R.color.choose_background));
+                mLastColorItem.setBackgroundColor(ContextCompat.getColor(mActivity.get(), android.R.color.white));
+                mLastColorItem = holder.mColorItem;
             }
         });
     }
@@ -61,6 +70,8 @@ public class ColorAdapter extends RecyclerView.Adapter<ColorAdapter.ColorHolder>
 
         @BindView(R.id.color)
         TextView mColor;
+        @BindView(R.id.color_item)
+        LinearLayout mColorItem;
 
         public ColorHolder(View itemView) {
             super(itemView);

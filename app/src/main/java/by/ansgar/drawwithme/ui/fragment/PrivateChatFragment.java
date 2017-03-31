@@ -33,6 +33,7 @@ import by.ansgar.drawwithme.ui.adapter.ColorAdapter;
 import by.ansgar.drawwithme.ui.adapter.MessagesAdapter;
 import by.ansgar.drawwithme.ui.adapter.SmilesAdapter;
 import by.ansgar.drawwithme.ui.custom.ResizeWidthAnimation;
+import by.ansgar.drawwithme.ui.custom.TouchEventView;
 import by.ansgar.drawwithme.ui.listeners.ColorListener;
 import by.ansgar.drawwithme.ui.listeners.SmilesListener;
 import by.ansgar.drawwithme.util.DateUtils;
@@ -63,6 +64,9 @@ public class PrivateChatFragment extends Fragment implements ColorListener, Anim
 
     @BindView(R.id.smiles_ll)
     LinearLayout mSmilesLl;
+
+    @BindView(R.id.draw_view)
+    TouchEventView mTouchEventView;
 
     @BindView(R.id.color_recycler)
     RecyclerView mColorRecycler;
@@ -125,6 +129,7 @@ public class PrivateChatFragment extends Fragment implements ColorListener, Anim
         mMessageRecycler.getAdapter().notifyDataSetChanged();
         mMessageRecycler.scrollToPosition(messages.size() - 1);
     }
+
     public void updateSmileRecycler(List<String> smiles) {
         mSmilesAdapter = new SmilesAdapter(smiles, getActivity(), this);
         mSmileRecycler.setLayoutManager(new GridLayoutManager(getContext(), 6));
@@ -152,7 +157,7 @@ public class PrivateChatFragment extends Fragment implements ColorListener, Anim
 
     @Override
     public void colorSelected(String color) {
-
+        mTouchEventView.setColor(color);
     }
 
     @Override
