@@ -52,8 +52,8 @@
 
             <by.ansgar.drawwithme.ui.custom.TouchEventView
                 android:id="@+id/draw_view"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"/>
+                android:layout_width="@dimen/draw_width"
+                android:layout_height="@dimen/draw_height"/>
 
         </LinearLayout>
 

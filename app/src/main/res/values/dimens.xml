@@ -88,4 +88,7 @@
     <dimen name="xxww_dimen">90dp</dimen>
     <dimen name="xxw_dimen">100dp</dimen>
 
+    <dimen name="draw_width">2000dp</dimen>
+    <dimen name="draw_height">2000dp</dimen>
+
 </resources>

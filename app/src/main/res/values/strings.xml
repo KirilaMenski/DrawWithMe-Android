@@ -6,9 +6,9 @@
     <string name="start">Start</string>
     <string name="members_count">Members count: %d</string>
     <string-array name="colors">
+        <item>#000000</item>
         <item>#FFFFFF</item>
         <item>#FF0000</item>
-        <item>#000000</item>
         <item>#0800FF</item>
         <item>#15FF00</item>
         <item>#AE00FF</item>
