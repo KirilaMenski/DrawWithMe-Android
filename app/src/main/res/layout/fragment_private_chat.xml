@@ -1,23 +1,55 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              xmlns:app="http://schemas.android.com/apk/res-auto"
               android:layout_width="match_parent"
               android:layout_height="match_parent"
               android:orientation="vertical"
               android:padding="@dimen/h_dimen">
 
-    <android.support.design.widget.BottomNavigationView
+    <LinearLayout
         android:id="@+id/tools_ll"
-        style="@style/Widget.Design.BottomNavigationView"
-        android:layout_width="@dimen/xxxxbb_size"
-        android:layout_height="@dimen/xxld_size"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_marginBottom="@dimen/l_dimen"
         android:background="@drawable/blocks_background"
-        android:fitsSystemWindows="false"
-        app:itemIconTint="@drawable/nav_color_state"
-        app:itemTextColor="@drawable/nav_color_state"
-        app:menu="@menu/menu_nav">
-    </android.support.design.widget.BottomNavigationView>
+        android:gravity="center"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/tools_pencil"
+            android:layout_width="@dimen/w_dimen"
+            android:layout_height="@dimen/w_dimen"
+            android:background="@drawable/tools_pencil_background"
+            android:clickable="true"/>
+
+        <TextView
+            android:id="@+id/tools_eraser"
+            android:layout_width="@dimen/w_dimen"
+            android:layout_height="@dimen/w_dimen"
+            android:background="@drawable/tools_eraser_background"
+            android:clickable="true"/>
+
+        <TextView
+            android:id="@+id/tools_filling"
+            android:layout_width="@dimen/w_dimen"
+            android:layout_height="@dimen/w_dimen"
+            android:background="@drawable/tools_filling_background"
+            android:clickable="true"/>
+
+        <TextView
+            android:id="@+id/tools_hand"
+            android:layout_width="@dimen/w_dimen"
+            android:layout_height="@dimen/w_dimen"
+            android:background="@drawable/tools_hand_background"
+            android:clickable="true"/>
+
+        <TextView
+            android:id="@+id/tools_save"
+            android:layout_width="@dimen/w_dimen"
+            android:layout_height="@dimen/w_dimen"
+            android:background="@drawable/tools_save_background"
+            android:clickable="true"/>
+
+    </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"

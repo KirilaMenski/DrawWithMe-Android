@@ -24,6 +24,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -61,6 +62,18 @@ public class PrivateChatFragment extends Fragment implements ColorListener, Anim
 
     @BindView(R.id.message)
     EditText mMessage;
+
+    @BindView(R.id.tools_pencil)
+    TextView mToolsPencil;
+    @BindView(R.id.tools_eraser)
+    TextView mToolsEraser;
+    @BindView(R.id.tools_hand)
+    TextView mToolsHand;
+    @BindView(R.id.tools_filling)
+    TextView mToolsFilling;
+    @BindView(R.id.tools_save)
+    TextView mToolsSave;
+    TextView mToolsLast;
 
     @BindView(R.id.smiles_ll)
     LinearLayout mSmilesLl;
@@ -113,6 +126,39 @@ public class PrivateChatFragment extends Fragment implements ColorListener, Anim
     public void showSmiles() {
         mSmilesLl.setVisibility(View.VISIBLE);
         KeyBoardUtils.hideKeyBoard(getActivity());
+    }
+
+    @OnClick(R.id.tools_pencil)
+    public void toolsPencil() {
+        if (mToolsLast != null) mToolsLast.setActivated(false);
+        mToolsLast = mToolsPencil;
+        mToolsPencil.setActivated(true);
+    }
+
+    @OnClick(R.id.tools_eraser)
+    public void toolsEraser() {
+        if (mToolsLast != null) mToolsLast.setActivated(false);
+        mToolsLast = mToolsEraser;
+        mToolsEraser.setActivated(true);
+    }
+
+    @OnClick(R.id.tools_hand)
+    public void toolsHand() {
+        if (mToolsLast != null) mToolsLast.setActivated(false);
+        mToolsLast = mToolsHand;
+        mToolsHand.setActivated(true);
+    }
+
+    @OnClick(R.id.tools_filling)
+    public void toolsFilling() {
+        if (mToolsLast != null) mToolsLast.setActivated(false);
+        mToolsLast = mToolsFilling;
+        mToolsFilling.setActivated(true);
+    }
+
+    @OnClick(R.id.tools_save)
+    public void toolsSave() {
+
     }
 
     private void updateColorRecycler(List<String> colors) {
