@@ -150,6 +150,7 @@ public class PrivateChatFragment extends Fragment implements ColorListener, Anim
         if (mToolsLast != null) mToolsLast.setActivated(false);
         mToolsLast = mToolsHand;
         mToolsHand.setActivated(true);
+        mTouchEventView.setToolsHand(true);
     }
 
     @OnClick(R.id.tools_filling)

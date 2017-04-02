@@ -7,8 +7,10 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Path;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
+import android.widget.LinearLayout;
 import by.ansgar.drawwithme.R;
 
 /**
@@ -30,6 +32,8 @@ public class TouchEventView extends View {
     private int mPaintColor = Color.BLACK;
     private Canvas mDrawCanvas;
     private Bitmap mCanvasBitmap;
+    private int mXDelta;
+    private int mYDelta;
 
     public TouchEventView(Context context, AttributeSet attrs) {
         super(context, attrs);
@@ -71,16 +75,40 @@ public class TouchEventView extends View {
         float touchX = event.getX();
         float touchY = event.getY();
 
+        final int rawX = (int) event.getRawX();
+        final int rawY = (int) event.getRawY();
+
         switch (event.getAction()) {
             case MotionEvent.ACTION_DOWN:
-                mDrawPath.moveTo(touchX, touchY);
+                if (mToolsPencil || mToolsEraser)
+                    mDrawPath.moveTo(touchX, touchY);
+                if (mToolsHand) {
+                    LinearLayout.LayoutParams params = (LinearLayout.LayoutParams) getLayoutParams();
+                    mXDelta = rawX - params.leftMargin;
+                    mYDelta = rawY - params.topMargin;
+                }
                 break;
             case MotionEvent.ACTION_MOVE:
-                mDrawPath.lineTo(touchX, touchY);
+                if (mToolsPencil || mToolsEraser)
+                    mDrawPath.lineTo(touchX, touchY);
+                if (mToolsHand) {
+                    LinearLayout.LayoutParams params = (LinearLayout.LayoutParams) getLayoutParams();
+                    params.leftMargin = rawX - mXDelta;
+                    params.topMargin = rawY - mYDelta;
+                    setLayoutParams(params);
+                }
                 break;
             case MotionEvent.ACTION_UP:
-                mDrawCanvas.drawPath(mDrawPath, mDrawPaint);
-                mDrawPath.reset();
+                if (mToolsPencil || mToolsEraser) {
+                    mDrawCanvas.drawPath(mDrawPath, mDrawPaint);
+                    mDrawPath.reset();
+                }
+                if (mToolsHand) {
+                    Log.i("!!!!!!!", "Left: " + getLeft());
+                    Log.i("!!!!!!!", "Right: " + getRight());
+                    Log.i("!!!!!!!", "Top: " + getTop());
+                    Log.i("!!!!!!!", "Bottom: " + getBottom());
+                }
                 break;
             default:
                 return false;
@@ -110,6 +138,9 @@ public class TouchEventView extends View {
     public void setToolsHand(boolean toolsHand) {
         invalidate();
         mToolsHand = toolsHand;
+        mToolsPencil = false;
+        mToolsEraser = false;
+        mToolsFilling = false;
     }
 
     public void setToolsFilling(boolean toolsFilling) {
