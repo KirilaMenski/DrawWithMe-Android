@@ -17,6 +17,14 @@ import by.ansgar.drawwithme.R;
 
 public class TouchEventView extends View {
 
+    private final float PENCIL_WIDTH = 5f;
+    private final float ERASER_WIDTH = 50f;
+
+    private boolean mToolsPencil = true;
+    private boolean mToolsHand;
+    private boolean mToolsFilling;
+    private boolean mToolsEraser;
+
     private Path mDrawPath;
     private Paint mDrawPaint, mCanvasPaint;
     private int mPaintColor = Color.BLACK;
@@ -32,7 +40,7 @@ public class TouchEventView extends View {
         mDrawPath = new Path();
         mDrawPaint = new Paint();
         mDrawPaint.setAntiAlias(true);
-        mDrawPaint.setStrokeWidth(5f);
+        mDrawPaint.setStrokeWidth(PENCIL_WIDTH);
         mDrawPaint.setStyle(Paint.Style.STROKE);
         mDrawPaint.setStrokeJoin(Paint.Join.ROUND);
         mDrawPaint.setStrokeCap(Paint.Cap.ROUND);
@@ -88,4 +96,34 @@ public class TouchEventView extends View {
         mDrawPaint.setColor(mPaintColor);
     }
 
+    public void setToolsPencil(boolean toolsPencil, String color) {
+        invalidate();
+        mToolsPencil = toolsPencil;
+        mToolsEraser = false;
+        mToolsFilling = false;
+        mToolsHand = false;
+        mPaintColor = Color.parseColor(color);
+        mDrawPaint.setColor(mPaintColor);
+        mDrawPaint.setStrokeWidth(PENCIL_WIDTH);
+    }
+
+    public void setToolsHand(boolean toolsHand) {
+        invalidate();
+        mToolsHand = toolsHand;
+    }
+
+    public void setToolsFilling(boolean toolsFilling) {
+        invalidate();
+        mToolsFilling = toolsFilling;
+    }
+
+    public void setToolsEraser(boolean toolsEraser) {
+        invalidate();
+        mToolsEraser = toolsEraser;
+        mToolsFilling = false;
+        mToolsHand = false;
+        mToolsPencil = false;
+        mDrawPaint.setColor(Color.WHITE);
+        mDrawPaint.setStrokeWidth(ERASER_WIDTH);
+    }
 }

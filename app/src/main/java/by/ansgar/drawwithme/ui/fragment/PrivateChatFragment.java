@@ -56,6 +56,7 @@ public class PrivateChatFragment extends Fragment implements ColorListener, Anim
     private List<Message> mMessages = new ArrayList<>();
     private boolean mArrowClicked;
     private int mChatRlWidth;
+    private String mCurrentColor = "#000000";
 
     @BindView(R.id.arrow)
     ImageView mActionArrow;
@@ -133,6 +134,7 @@ public class PrivateChatFragment extends Fragment implements ColorListener, Anim
         if (mToolsLast != null) mToolsLast.setActivated(false);
         mToolsLast = mToolsPencil;
         mToolsPencil.setActivated(true);
+        mTouchEventView.setToolsPencil(true, mCurrentColor);
     }
 
     @OnClick(R.id.tools_eraser)
@@ -140,6 +142,7 @@ public class PrivateChatFragment extends Fragment implements ColorListener, Anim
         if (mToolsLast != null) mToolsLast.setActivated(false);
         mToolsLast = mToolsEraser;
         mToolsEraser.setActivated(true);
+        mTouchEventView.setToolsEraser(true);
     }
 
     @OnClick(R.id.tools_hand)
@@ -203,6 +206,7 @@ public class PrivateChatFragment extends Fragment implements ColorListener, Anim
 
     @Override
     public void colorSelected(String color) {
+        mCurrentColor = color;
         mTouchEventView.setColor(color);
     }
 
