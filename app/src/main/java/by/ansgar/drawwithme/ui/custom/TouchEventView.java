@@ -7,7 +7,6 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Path;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.LinearLayout;
@@ -80,12 +79,41 @@ public class TouchEventView extends View {
 
         switch (event.getAction()) {
             case MotionEvent.ACTION_DOWN:
+
                 if (mToolsPencil || mToolsEraser)
                     mDrawPath.moveTo(touchX, touchY);
                 if (mToolsHand) {
                     LinearLayout.LayoutParams params = (LinearLayout.LayoutParams) getLayoutParams();
                     mXDelta = rawX - params.leftMargin;
                     mYDelta = rawY - params.topMargin;
+                }
+                if (mToolsFilling) {
+
+                    setDrawingCacheEnabled(true);
+                    buildDrawingCache(true);
+                    Bitmap bitmap = loadLargeBitmapFromView();
+                    setDrawingCacheEnabled(false);
+
+                    int pxl = bitmap.getPixel((int) touchX, (int) touchY);
+                    int red = Color.red(pxl);
+                    int green = Color.green(pxl);
+                    int blue = Color.blue(pxl);
+
+                    int color = Color.argb(0, red, green, blue);
+
+                    for (int i = (int) touchX; i < bitmap.getWidth(); i++) {
+                        int p = bitmap.getPixel(i, (int) touchY);
+                        int r = Color.red(p);
+                        int g = Color.green(p);
+                        int b = Color.blue(p);
+                        int col = Color.argb(0, r, g, b);
+                        if (color == col) {
+                            mDrawPath.lineTo(i, touchY);
+                        } else {
+                            break;
+                        }
+                    }
+
                 }
                 break;
             case MotionEvent.ACTION_MOVE:
@@ -99,15 +127,15 @@ public class TouchEventView extends View {
                 }
                 break;
             case MotionEvent.ACTION_UP:
-                if (mToolsPencil || mToolsEraser) {
+                if (mToolsPencil || mToolsEraser || mToolsFilling) {
                     mDrawCanvas.drawPath(mDrawPath, mDrawPaint);
                     mDrawPath.reset();
                 }
                 if (mToolsHand) {
-                    Log.i("!!!!!!!", "Left: " + getLeft());
-                    Log.i("!!!!!!!", "Right: " + getRight());
-                    Log.i("!!!!!!!", "Top: " + getTop());
-                    Log.i("!!!!!!!", "Bottom: " + getBottom());
+//                    Log.i("!!!!!!!", "Left: " + getLeft());
+//                    Log.i("!!!!!!!", "Right: " + getRight());
+//                    Log.i("!!!!!!!", "Top: " + getTop());
+//                    Log.i("!!!!!!!", "Bottom: " + getBottom());
                 }
                 break;
             default:
@@ -146,6 +174,9 @@ public class TouchEventView extends View {
     public void setToolsFilling(boolean toolsFilling) {
         invalidate();
         mToolsFilling = toolsFilling;
+        mToolsPencil = false;
+        mToolsEraser = false;
+        mToolsHand = false;
     }
 
     public void setToolsEraser(boolean toolsEraser) {
@@ -156,5 +187,14 @@ public class TouchEventView extends View {
         mToolsPencil = false;
         mDrawPaint.setColor(Color.WHITE);
         mDrawPaint.setStrokeWidth(ERASER_WIDTH);
+    }
+
+    private Bitmap loadLargeBitmapFromView() {
+        Bitmap bitmap = Bitmap.createBitmap(getWidth(), getHeight(), Bitmap.Config.ARGB_8888);
+
+        Canvas c = new Canvas(bitmap);
+        layout(0, 0, getLayoutParams().width, getLayoutParams().height);
+        draw(c);
+        return bitmap;
     }
 }
