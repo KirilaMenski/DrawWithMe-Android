@@ -112,6 +112,47 @@ public class TouchEventView extends View {
                         } else {
                             break;
                         }
+
+                        for (int j = (int) touchY; j < bitmap.getHeight(); j++) {
+                            int pY = bitmap.getPixel((int) touchX, j);
+                            int rY = Color.red(pY);
+                            int gY = Color.green(pY);
+                            int bY = Color.blue(pY);
+                            int colY = Color.argb(0, rY, gY, bY);
+                            if (color == colY) {
+                                mDrawPath.lineTo(touchX, j);
+                            } else {
+                                break;
+                            }
+                        }
+
+                    }
+
+                    for (int i = (int) touchX; i > 0; i--) {
+                        int p = bitmap.getPixel(i, (int) touchY);
+                        int r = Color.red(p);
+                        int g = Color.green(p);
+                        int b = Color.blue(p);
+                        int col = Color.argb(0, r, g, b);
+                        if (color == col) {
+                            mDrawPath.lineTo(i, touchY);
+                        } else {
+                            break;
+                        }
+
+                        for (int j = (int) touchY; j > 0; j--) {
+                            int pY = bitmap.getPixel((int) touchX, j);
+                            int rY = Color.red(pY);
+                            int gY = Color.green(pY);
+                            int bY = Color.blue(pY);
+                            int colY = Color.argb(0, rY, gY, bY);
+                            if (color == colY) {
+                                mDrawPath.lineTo(touchX, j);
+                            } else {
+                                break;
+                            }
+                        }
+
                     }
 
                 }
